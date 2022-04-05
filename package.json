@@ -7,8 +7,6 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
- 
-  },
-  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
