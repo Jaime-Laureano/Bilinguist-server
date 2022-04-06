@@ -46,6 +46,8 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
+  app.use(require ("../routes/auth.routes"))
+
   // ℹ️ Middleware that adds a "req.session" information and later to check that you are who you say you are 😅
   app.use(
     session({
@@ -63,8 +65,12 @@ module.exports = (app) => {
     })
   );
 
+  
+
   app.use((req, res, next) => {
     req.user = req.session.user || null;
     next();
   });
 };
+
+
