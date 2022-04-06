@@ -7,7 +7,7 @@ require("dotenv/config");
 
 // ℹ️ Connects to the database
 require("./db");
-console.log("hello");
+
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
@@ -22,6 +22,9 @@ require("./config")(app);
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
+// app.use(require("../routes/auth.routes"));
+// app.use(require("../routes/student.routes"));
+// app.use(require("../routes/teacher.routes"));
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
