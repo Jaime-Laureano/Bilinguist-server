@@ -20,9 +20,10 @@ router.get("/signup", (req,res) => {
 // });
 
 router.post("/signup", async (req, res) => {
-  console.log("hello", req.body)
+  
   try {
-    const { user: email, password } = req.body;
+    const { email, password, fullName, country, city } = req.body;
+    console.log("cheese", fullName)
 
     const emailExists = await User.findOne({ email });
     if (emailExists) {
@@ -40,7 +41,7 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(12);
     const hashedPass = await bcrypt.hash(password, salt);
 
-    await User.create({ username, password: hashedPass });
+    await User.create({ fullName, email, password: hashedPass, country, city });
 
     return res.json({ message: "You're all signed up and good to go!" });
   } catch (error) {
