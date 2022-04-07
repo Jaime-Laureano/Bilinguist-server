@@ -1,7 +1,7 @@
 module.exports = (app) => {
   app.use((req, res, next) => {
     // this middleware runs whenever requested page is not available
- 
+    console.log(req)
     res.status(404).json({ errorMessage: "Cheezzzzzy Chips" });
     
   });
