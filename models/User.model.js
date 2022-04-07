@@ -29,7 +29,7 @@ const userSchema = new Schema(
     
 
     
-    isTeacher: Boolean
+    // isTeacher: Boolean
   },
   {
     timestamps: true,
