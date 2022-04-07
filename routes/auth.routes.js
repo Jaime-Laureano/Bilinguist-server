@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 
 router.get("/signup", (req,res) => {
-  console.log("hi")
+
   res.json("this will be sign up form")
 })
 
@@ -19,7 +19,8 @@ router.get("/signup", (req,res) => {
 //   res.json(req.user);
 // });
 
-router.post("/signup", isLoggedOut, async (req, res) => {
+router.post("/signup", async (req, res) => {
+  console.log("hello", req.body)
   try {
     const { user: email, password } = req.body;
 
