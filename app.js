@@ -22,6 +22,8 @@ require("./config")(app);
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
+const authRoutes = require("./routes/auth.routes");
+app.use("/api", authRoutes);
 // app.use(require("../routes/auth.routes"));
 // app.use(require("../routes/student.routes"));
 // app.use(require("../routes/teacher.routes"));
