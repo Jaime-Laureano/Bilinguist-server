@@ -1,24 +1,32 @@
 const router = require("express").Router();
 const Message = require("../models/Message.model");
-const isLoggedIn = require("../middlewares/isLoggedIn");
-const isTeacher = require("../middlewares/isTeacher");
+const isLoggedIn = require("../middleware/isLoggedIn");
+const isTeacher = require("../middleware/isTeacher");
 
 router.use(isLoggedIn);
 
 router.get("/teacher-profile", isTeacher, (req,res) => {
-    res.render("teacher-profile")
+    res.json("teacher-profile")
 })
 
 router.get("/message-board", isTeacher, (req,res) => {
-    res.render("message-board")
+    res.json("message-board")
+})
+
+router.get("/new-message", isTeacher, (req,res) => {
+    res.json("new message")
 })
 
 router.get("/video-chat", isTeacher, (req,res) => {
-    res.render("video-chat")
+    res.json("video-chat")
 })
 
-router.get("/post-ad", isStudent, (req,res) => {
-    res.render("post-ad")
+router.get("/post-ad", isTeacher, (req,res) => {
+    res.json("post-ad")
 })
+
+router.post("/new-message", isTeacher, (req, res) => {
+    
+}) 
 
 module.exports = router;
