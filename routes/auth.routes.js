@@ -5,7 +5,6 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/", (req, res) => {
-  console.log("first console log");
   res.json("hello Biatch");
 });
 
@@ -15,15 +14,13 @@ router.get("/signup", (req,res) => {
   res.json("this will be sign up form")
 })
 
-// router.get("/loggedin", (req, res) => {
-//   res.json(req.user);
-// });
 
-router.post("/signup", async (req, res) => {
-  
+router.post("/signup", isLoggedOut ,async (req, res) => {
+ 
+    console.log(req.body, 'after')
   try {
-    const { email, password, fullName, country, city } = req.body;
-    console.log("cheese", fullName)
+    const { email, password, fullName, country, city, isTeacher } = req.body;
+
 
     const emailExists = await User.findOne({ email });
     if (emailExists) {
@@ -41,8 +38,8 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(12);
     const hashedPass = await bcrypt.hash(password, salt);
 
-    await User.create({ fullName, email, password: hashedPass, country, city });
-
+    const userDB = await User.create({ fullName, email, password: hashedPass, country, city, isTeacher });
+      console.log(userDB)
     return res.json({ message: "You're all signed up and good to go!" });
   } catch (error) {
     console.log(error);
@@ -82,6 +79,7 @@ router.post("/login", isLoggedOut, async (req, res, next) => {
           return res.status(400).json({ errorMessage: "Email or password incorrect" });
         }
         req.session.user = user;
+        console.log(user, "yo yo yo yo yo ")
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.json(user);
       });
@@ -93,11 +91,6 @@ router.post("/login", isLoggedOut, async (req, res, next) => {
       return res.status(500).render("login", { errorMessage: err.message });
     });
 });
-
-
-
-
-
 
 
 router.post("/logout", isLoggedIn, (req, res) => {
