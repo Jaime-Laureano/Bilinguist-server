@@ -12,9 +12,7 @@ const stuRoutes = require("./routes/student.routes");
 app.use("/api", stuRoutes);
 const teaRoutes = require("./routes/teacher.routes");
 app.use("/api", teaRoutes);
-// app.use(require("../routes/auth.routes"));
-// app.use(require("./routes/student.routes"));
-// app.use(require("./routes/teacher.routes"));
+
 
 require("./error-handling")(app);
 

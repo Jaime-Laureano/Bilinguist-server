@@ -46,7 +46,7 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
-  app.use(require ("../routes/auth.routes"))
+
 
   // ℹ️ Middleware that adds a "req.session" information and later to check that you are who you say you are 😅
   app.use(
@@ -58,19 +58,13 @@ module.exports = (app) => {
         mongoUrl: MONGO_URI,
       }),
       cookie: {
+        httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365,
-        sameSite: "none",
-        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === "production" 
       },
     })
   );
-
-  
-
-  app.use((req, res, next) => {
-    req.user = req.session.user || null;
-    next();
-  });
 };
 
 
