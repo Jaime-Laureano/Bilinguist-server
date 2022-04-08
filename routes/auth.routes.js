@@ -70,6 +70,7 @@ router.post("/login", isLoggedOut, async (req, res, next) => {
 
   User.findOne({ email })
     .then((user) => {
+      console.log(user, "whats up")
       if (!user) {
         return res.status(400).json({ errorMessage: "Wrong credentials." });
       }
@@ -79,7 +80,7 @@ router.post("/login", isLoggedOut, async (req, res, next) => {
           return res.status(400).json({ errorMessage: "Email or password incorrect" });
         }
         req.session.user = user;
-        console.log(user, "yo yo yo yo yo ")
+        console.log(user, "yo yo yo yo yo ", req.session)
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.json(user);
       });
@@ -94,6 +95,7 @@ router.post("/login", isLoggedOut, async (req, res, next) => {
 
 
 router.post("/logout", isLoggedIn, (req, res) => {
+  console.log("why you no log out?")
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ errorMessage: err.message });
