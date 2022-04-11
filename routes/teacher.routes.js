@@ -4,21 +4,21 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const isTeacher = require("../middleware/isTeacher");
 const AddTeacher = require("../models/AddTeacher.model");
 
-router.use(isLoggedIn);
-
-router.get("/teacher-profile", isTeacher, (req, res) => {
+router.get("/teacher-profile", isLoggedIn, (req, res) => {
 	res.json("teacher-profile");
 });
 
-router.get("/message-board", isTeacher, (req, res) => {
-	res.json("message-board");
+router.get("/message-board", isLoggedIn, async (req, res) => {
+	const messages = await Message.find();
+	console.log(messages, "all messages ****");
+	res.json({ messages });
 });
 
-router.get("/new-message", isTeacher, (req, res) => {
+router.get("/new-message", isLoggedIn, (req, res) => {
 	res.json("new message");
 });
 
-router.get("/video-chat", isTeacher, (req, res) => {
+router.get("/video-chat", isLoggedIn, (req, res) => {
 	res.json("video-chat");
 });
 
@@ -50,9 +50,8 @@ router.post("/add-teacher", isLoggedIn, async (req, res, next) => {
 router.post("/message-board", isLoggedIn, async (req, res, next) => {
 	try {
 		const { comment, from } = req.body;
-		console.log(comment, from, "<<<< comment from server ");
+
 		const userPersonId = req.session.user.fullName;
-		console.log(userPersonId, "<<<this too");
 
 		await Message.create({ comment, from: userPersonId });
 
@@ -77,10 +76,10 @@ router.delete("/message-board", isLoggedIn, async (req, res, next) => {
 	}
 });
 
-router.get("/find-teacher", isTeacher, (req, res) => {
+router.get("/find-teacher", isLoggedIn, (req, res) => {
 	res.json("find-teacher");
 });
 
-router.post("/new-message", isTeacher, (req, res) => {});
+router.post("/new-message", isLoggedIn, (req, res) => {});
 
 module.exports = router;
