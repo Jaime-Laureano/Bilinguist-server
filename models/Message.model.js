@@ -2,10 +2,12 @@ const { Schema, model } = require("mongoose");
 
 const messageSchema = new Schema(
   {
-    message: { type: String, required: true },
+    comment: { type: String, required: true },
     from: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    to: { type: Schema.Types.ObjectId, ref: "User", required: true }
-  }
+    // to: { type: Schema.Types.ObjectId, ref: "User", required: true }
+    
+  },
+  { timestamps: true}
 );
 
 const Message = model("Message", messageSchema);
