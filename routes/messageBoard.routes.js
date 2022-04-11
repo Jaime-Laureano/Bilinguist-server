@@ -9,6 +9,10 @@ router.get("/student-profile", (req, res) => {
 	res.json("student-profile");
 });
 
+router.get("/message-board", isStudent, (req, res) => {
+	res.json("message-board");
+});
+
 router.get("/new-message", isStudent, (req, res) => {
 	res.json("new message");
 });
@@ -24,5 +28,7 @@ router.get("/find-teacher", isStudent, (req, res) => {
 router.get("/practice", isStudent, (req, res) => {
 	res.json("practice");
 });
+
+router.post("/new-message", isStudent, (req, res) => {});
 
 module.exports = router;
