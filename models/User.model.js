@@ -2,32 +2,34 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
+    imageUrl: { String },
+
     fullName: {
       type: String,
-      required: true
+      required: true,
     },
 
     email: {
       type: String,
-      required: true
+      required: true,
     },
 
     password: {
       type: String,
-      required: true
+      required: true,
     },
 
     country: {
       type: String,
-      required: true
+      required: true,
     },
 
     city: {
       type: String,
-      required: true
+      required: true,
     },
-    
-    isTeacher: Boolean
+
+    isTeacher: Boolean,
   },
   {
     timestamps: true,
