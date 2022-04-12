@@ -48,6 +48,7 @@ router.post("/add-teacher", isLoggedIn, async (req, res, next) => {
 });
 
 router.post("/message-board", isLoggedIn, async (req, res, next) => {
+	console.log(req.body, "reqq bodyyyy");
 	try {
 		const { comment, from } = req.body;
 
@@ -76,7 +77,9 @@ router.delete("/message-board", isLoggedIn, async (req, res, next) => {
 	}
 });
 
-router.get("/find-teacher", isLoggedIn, (req, res) => {
+router.get("/find-teacher", isLoggedIn, async (req, res) => {
+	const allTeachers = await AddTeacher.find();
+	console.log(allTeachers, "////////////////");
 	res.json("find-teacher");
 });
 

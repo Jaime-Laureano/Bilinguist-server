@@ -17,10 +17,6 @@ router.get("/video-chat", isStudent, (req, res) => {
 	res.json("video-chat");
 });
 
-router.get("/find-teacher", isStudent, (req, res) => {
-	res.json("find-teacher");
-});
-
 router.get("/practice", isStudent, (req, res) => {
 	res.json("practice");
 });
