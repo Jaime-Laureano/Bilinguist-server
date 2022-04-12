@@ -27,16 +27,23 @@ router.get("/video-chat", isLoggedIn, (req, res) => {
 // })
 
 router.post("/add-teacher", isLoggedIn, async (req, res, next) => {
+	console.log(
+		req.session.user.city,
+		req.session.user.fullName,
+		"<<<<<< I hopw this logs",
+	);
 	try {
-		const { fullName, languages, cityRec, langLevel, goals, funFact } =
+		const { fullName, languages, cityRec, langLevel, goals, funFact, price } =
 			req.body;
 		const newTeach = new AddTeacher({
-			fullName,
+			fullName: req.session.user.fullName,
 			languages,
 			cityRec,
 			langLevel,
 			goals,
 			funFact,
+			price,
+			city: req.session.user.city,
 		});
 		await newTeach.save();
 		res.json({ message: "Succesfully created new listing" });
@@ -80,7 +87,7 @@ router.delete("/message-board", isLoggedIn, async (req, res, next) => {
 router.get("/find-teacher", isLoggedIn, async (req, res) => {
 	const allTeachers = await AddTeacher.find();
 	console.log(allTeachers, "////////////////");
-	res.json("find-teacher");
+	res.json({ allTeachers });
 });
 
 router.post("/new-message", isLoggedIn, (req, res) => {});
