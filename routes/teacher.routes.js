@@ -10,7 +10,7 @@ router.get("/teacher-profile", isLoggedIn, (req, res) => {
 
 router.get("/message-board", isLoggedIn, async (req, res) => {
 	const messages = await Message.find();
-	console.log(messages, "all messages ****");
+	//console.log(messages, "all messages ****");
 	res.json({ messages });
 });
 
@@ -72,9 +72,10 @@ router.post("/message-board", isLoggedIn, async (req, res, next) => {
 	}
 });
 
-router.delete("/message-board", isLoggedIn, async (req, res, next) => {
+router.post("/message-board/:id", isLoggedIn, async (req, res, next) => {
 	try {
-		const { id } = req.body;
+		const { id } = req.params;
+		console.log(id);
 		await Message.findByIdAndDelete(id);
 		res.json({ message: "Successfully delete message " + id });
 	} catch (err) {
