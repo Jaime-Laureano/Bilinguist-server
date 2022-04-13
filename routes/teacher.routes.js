@@ -86,7 +86,7 @@ router.delete("/message-board", isLoggedIn, async (req, res, next) => {
 
 router.get("/find-teacher", isLoggedIn, async (req, res) => {
 	const allTeachers = await AddTeacher.find();
-	console.log(allTeachers, "////////////////");
+
 	res.json({ allTeachers });
 });
 
