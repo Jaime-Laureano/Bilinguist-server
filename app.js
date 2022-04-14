@@ -13,6 +13,9 @@ app.use("/api", stuRoutes);
 const teaRoutes = require("./routes/teacher.routes");
 app.use("/api", teaRoutes);
 
+app.get("/",(req,res) => {
+    res.send("hello")
+})
 
 require("./error-handling")(app);
 
