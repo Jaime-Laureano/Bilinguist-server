@@ -14,6 +14,24 @@ router.get("/message-board", isLoggedIn, async (req, res) => {
 	res.json({ messages });
 });
 
+router.get("/message-board/:id", isLoggedIn, async (req, res) => {
+	const { id } = req.params;
+
+	const message = await Message.findById(id);
+	res.json({ message });
+});
+
+router.put("/message-board/:id", isLoggedIn, async (req, res) => {
+	const { id } = req.params;
+	console.log("here", id, req.body);
+
+	const message = await Message.findByIdAndUpdate(id, {
+		comment: req.body.comment,
+	});
+	//	console.log(message, "foundmessage ****");
+	res.json({ message });
+});
+
 router.get("/new-message", isLoggedIn, (req, res) => {
 	res.json("new message");
 });
@@ -91,6 +109,54 @@ router.get("/find-teacher", isLoggedIn, async (req, res) => {
 	res.json({ allTeachers });
 });
 
-router.post("/new-message", isLoggedIn, (req, res) => {});
+router.get("/add-teacher/:id", isLoggedIn, async (req, res) => {
+	console.log("am I in this route????");
+	const { id } = req.params;
+
+	const message = await AddTeacher.findById(id);
+	res.json({ message });
+});
+
+router.put("/add-teacher/:id", isLoggedIn, async (req, res) => {
+	const { id } = req.params;
+	const {
+		city,
+		cityRec,
+		fullName,
+		funFact,
+		goals,
+		langLevel,
+		languages,
+		price,
+	} = req.body;
+	console.log(req.body);
+
+	const message = await AddTeacher.findByIdAndUpdate(id, {
+		city,
+		cityRec,
+		fullName,
+		funFact,
+		goals,
+		langLevel,
+		languages,
+		price,
+	});
+
+	res.json({ message });
+});
+
+router.post("/add-teacher/:id", isLoggedIn, async (req, res, next) => {
+	console.log("am I here in the delete");
+	try {
+		const { id } = req.params;
+		console.log(id);
+		await AddTeacher.findByIdAndDelete(id);
+		res.json({ message: "Successfully delete message " + id });
+	} catch (err) {
+		res
+			.status(400)
+			.json({ errorMessage: "Error in deleting message! " + err.message });
+	}
+});
 
 module.exports = router;
