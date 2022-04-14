@@ -14,6 +14,24 @@ router.get("/message-board", isLoggedIn, async (req, res) => {
 	res.json({ messages });
 });
 
+router.get("/message-board/:id", isLoggedIn, async (req, res) => {
+	const { id } = req.params;
+
+	const message = await Message.findById(id);
+	res.json({ message });
+});
+
+router.put("/message-board/:id", isLoggedIn, async (req, res) => {
+	const { id } = req.params;
+	console.log("here", id, req.body);
+
+	const message = await Message.findByIdAndUpdate(id, {
+		comment: req.body.comment,
+	});
+	//	console.log(message, "foundmessage ****");
+	res.json({ message });
+});
+
 router.get("/new-message", isLoggedIn, (req, res) => {
 	res.json("new message");
 });
