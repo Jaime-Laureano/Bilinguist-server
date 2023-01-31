@@ -34,8 +34,7 @@ module.exports = (app) => {
   // ! please configure the cors `origin` key so that you can accept the requests wherever they might be coming from
   app.use(
     cors({
-      credentials: true,
-      origin: process.env.ORIGIN || "http://localhost:3000",
+      origin: ["http://localhost:3000", process.env.ORIGIN],
     })
   );
 
@@ -45,8 +44,6 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-
-
 
   // ℹ️ Middleware that adds a "req.session" information and later to check that you are who you say you are 😅
   app.use(
@@ -60,11 +57,9 @@ module.exports = (app) => {
       cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365,
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
-        secure: process.env.NODE_ENV === "production" 
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: process.env.NODE_ENV === "production",
       },
     })
   );
 };
-
-
